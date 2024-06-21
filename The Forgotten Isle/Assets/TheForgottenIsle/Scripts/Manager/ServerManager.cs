@@ -6,6 +6,7 @@ public class ServerManager : NetworkBehaviour
 {
     #region Singleton
     public static ServerManager instance;
+    private NetworkManager networkManager;
 
     private void Awake()
     {
@@ -17,12 +18,9 @@ public class ServerManager : NetworkBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         networkManager = NetworkManager.Singleton;
-
-        networkManager.NetworkConfig.ConnectionApproval = true;
     }
     #endregion
 
-    private NetworkManager networkManager;
 
     private int currentConnection = 0;
 
@@ -60,18 +58,12 @@ public class ServerManager : NetworkBehaviour
     // 연결 시작
     public void StartConnection()
     {
-        if (GetConnectionApproval() == false)
-        {
-            // UI호출 
-            return;
-        }
-
         if (currentConnection == 0)
         {
-            networkManager.StartHost();
+            networkManager.StartClient();
             Debug.Log("호스트로 연결을 시작합니다.");
 
-            StartTime();
+            //StartServer();
         }
         else
         {
@@ -86,12 +78,6 @@ public class ServerManager : NetworkBehaviour
     public void StopConnection()
     {
         networkManager.OnClientDisconnectCallback += OnClientDisconnected;
-    }
-
-    // 연결 승인 정보 가져오기
-    private bool GetConnectionApproval()
-    {
-        return networkManager.NetworkConfig.ConnectionApproval;
     }
 
     // 인게임 시간

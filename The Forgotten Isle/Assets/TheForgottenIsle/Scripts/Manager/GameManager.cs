@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //ServerManager.instance.StartConnection();
+        ServerManager.instance.StartConnection();
     }
 
     // "M" 키로 작동하는 맵
