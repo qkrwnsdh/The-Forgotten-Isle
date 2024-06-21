@@ -1,18 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Singleton
+    public static GameManager instance;
+
+    private void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+    }
+    #endregion
+
+    private void Start()
+    {
+        ServerManager.instance.StartConnection();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    // "M" 키로 작동하는 맵
+    public void ToggleMap()
+    { 
+    
+    }
+
+    // "ESC" 키로 작동하는 창
+    public void ToggleBoard()
+    { 
+    
+    }
+
+    private void InGameTime()
+    { 
+    //if()
     }
 }
