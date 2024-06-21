@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -21,14 +22,23 @@ public class ServerManager : NetworkBehaviour
     }
     #endregion
 
+    [SerializeField] private GameObject light;
 
     private int currentConnection = 0;
 
     private readonly int MAX_CONNECTION = 4;
+    private readonly int MAX_HOUR = 24;
+    private readonly int MAX_MINUTE = 60;
+    private readonly float DURATION = 5.0f;
+    private readonly float ADD_ANGLE = 2.5f;
+    private readonly float DEFAULT_ANGLE = 90.0f;
 
-    private int inGameTime;
+    private int timeHour;
+    private int timeMinute;
 
-    public static event Action<int> setTimeEvent;
+    private Coroutine lightCoroutine;
+
+    public static event Action<int, int> setTimeEvent;
 
     private void Start()
     {
@@ -83,34 +93,54 @@ public class ServerManager : NetworkBehaviour
     // 인게임 시간
     private void StartTime()
     {
-        InvokeRepeating(nameof(UpdateTime), 1f, 1f);
+        InvokeRepeating(nameof(UpdateTime), 0f, DURATION);
+        InvokeRepeating(nameof(StartLightCoroutine), 0f, DURATION);
+    }
+
+    private void StartLight()
+    {
+
     }
 
     // 호스트 연결시 초기화
     private void StartServer()
     {
         StartTime();
+        StartLight();
     }
 
     private void UpdateTime()
     {
-        inGameTime += 1;
-        UpdateTimeServerRpc(inGameTime);
+        timeMinute += 10;
+
+        if (timeMinute >= MAX_MINUTE)
+        {
+            timeHour += 1;
+            timeMinute = 0;
+
+            if (timeHour >= MAX_HOUR)
+            {
+                timeHour = 0;
+            }
+        }
+
+        UpdateTimeServerRpc(timeHour, timeMinute);
     }
 
     #region RPC
     [ServerRpc]
-    private void UpdateTimeServerRpc(int newTime)
+    private void UpdateTimeServerRpc(int setHour, int setMinute)
     {
-        inGameTime = newTime;
+        timeHour = setHour;
+        timeMinute = setMinute;
 
-        UpdateTimeClientRpc(inGameTime);
+        UpdateTimeClientRpc(timeHour, timeMinute);
     }
 
     [ClientRpc]
-    private void UpdateTimeClientRpc(int newTime)
+    private void UpdateTimeClientRpc(int setHour, int setMinute)
     {
-        if (setTimeEvent != null) { setTimeEvent.Invoke(newTime); }
+        if (setTimeEvent != null) { setTimeEvent.Invoke(setHour, setMinute); }
     }
 
     [ClientRpc]
@@ -119,5 +149,40 @@ public class ServerManager : NetworkBehaviour
         currentConnection = connectionCount;
         Debug.Log($"현재 연결된 클라이언트 수: {currentConnection}");
     }
+
+    [ClientRpc]
+    private void UpdateLightClientRpc(float angle)
+    {
+        light.transform.rotation = Quaternion.Euler(angle, 0.0f, 0.0f);
+    }
     #endregion
+
+    private void StartLightCoroutine()
+    {
+        if (lightCoroutine != null) { StopCoroutine(lightCoroutine); }
+        lightCoroutine = StartCoroutine(LightCoroutine());
+    }
+
+    private IEnumerator LightCoroutine()
+    {
+        int timeTotal = (timeHour * 60) + (timeMinute);
+        float currentAngle = DEFAULT_ANGLE + ((float)timeTotal / 4);
+        float targetAngle = currentAngle + ADD_ANGLE;
+
+        float timeElapsed = 0;
+
+        while (timeElapsed < DURATION)
+        {
+            timeElapsed += Time.deltaTime;
+
+            float time = Mathf.Clamp01(timeElapsed / DURATION);
+            float setAngle = Mathf.Lerp(currentAngle, targetAngle, time);
+
+            UpdateLightClientRpc(setAngle);
+
+            yield return null;
+        }
+
+        lightCoroutine = null;
+    }
 }

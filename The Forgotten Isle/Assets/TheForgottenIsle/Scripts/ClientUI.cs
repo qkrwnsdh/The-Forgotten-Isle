@@ -17,8 +17,8 @@ public class ClientUI : MonoBehaviour
         ServerManager.setTimeEvent -= UpdateTime;
     }
 
-    private void UpdateTime(int newTime)
+    private void UpdateTime(int setHour, int setMinute)
     {
-        timeUGUI.text = $"{newTime}";
+        timeUGUI.text = $"{setHour:D2}:{setMinute:D2}";
     }
 }
