@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ServerManager : NetworkBehaviour
 {
-    #region Singleton
+    #region Singleton and Awake()
     public static ServerManager instance;
     private NetworkManager networkManager;
 
@@ -22,25 +22,68 @@ public class ServerManager : NetworkBehaviour
     }
     #endregion
 
-    [SerializeField] private GameObject light;
+    #region Members
 
-    private int currentConnection = 0;
+    #region Attribute Members
+    [SerializeField] private GameObject light;          // 낮과 밤을 표현하기위한 Directional Light
+    #endregion
 
-    private readonly int MAX_CONNECTION = 4;
-    private readonly int MAX_HOUR = 24;
-    private readonly int MAX_MINUTE = 60;
-    private readonly float DURATION = 5.0f;
-    private readonly float ADD_ANGLE = 2.5f;
-    private readonly float DEFAULT_ANGLE = 90.0f;
+    #region Private Members
+    private Coroutine lightCoroutine;                   // LightCoroutine 중복 예방을 위한 코루틴
 
-    private int timeHour;
-    private int timeMinute;
+    private int currentConnection = 0;                  // 현재 연결된 인원 수
+    private int timeHour, timeMinute;                   // 시간, 분 을 표시
+    #endregion
 
-    private Coroutine lightCoroutine;
+    #region Readonly Members
+    private readonly int MAX_CONNECTION = 4;            // 최대 연결 인원
+    private readonly int MAX_HOUR = 24, MAX_MINUTE = 60;// 24시간, 60분을 표시
+    private readonly float DURATION = 5.0f;             // 분이 지나는 시간
+    private readonly float ADD_ANGLE = 2.5f;            // DURATION 동안 Light가 회전하는 각도
+    private readonly float DEFAULT_ANGLE = 90.0f;       // 낮 부터 시작하기위한 값
+    #endregion
 
-    public static event Action<int, int> setTimeEvent;
+    #region Delegate Members
+    public static event Action<int, int> setTimeEvent;  // 클라이언트가 각각 가지고있는 타이머를 초기화
+                                                        // 인수는 각각 <시간, 분> 표시
+    #endregion
 
+    #endregion
+
+    #region Initialization and Setup
     private void Start()
+    {
+        InitializationEvents();
+    }
+
+    private void InitializationEvents()
+    {
+        networkManager.OnClientDisconnectCallback += OnClientDisconnected;
+    }
+    #endregion
+
+    #region Connection
+    // 연결 시작
+    public void StartConnection()
+    {
+        if (currentConnection == 0)
+        {
+            networkManager.StartHost();
+            Debug.Log("호스트로 연결을 시작합니다.");
+
+            StartServer();
+        }
+        else
+        {
+            networkManager.StartClient();
+            Debug.Log("클라이언트로 연결을 시작합니다.");
+        }
+
+        networkManager.OnClientConnectedCallback += OnClientConnected;
+    }
+
+    // 연결 종료
+    public void StopConnection()
     {
         networkManager.OnClientDisconnectCallback += OnClientDisconnected;
     }
@@ -64,51 +107,23 @@ public class ServerManager : NetworkBehaviour
             UpdateConnectionCountClientRpc(currentConnection);
         }
     }
+    #endregion
 
-    // 연결 시작
-    public void StartConnection()
+    #region HostConnection
+    // 호스트 연결시 초기화
+    private void StartServer()
     {
-        if (currentConnection == 0)
-        {
-            networkManager.StartClient();
-            Debug.Log("호스트로 연결을 시작합니다.");
-
-            //StartServer();
-        }
-        else
-        {
-            networkManager.StartClient();
-            Debug.Log("클라이언트로 연결을 시작합니다.");
-        }
-
-        networkManager.OnClientConnectedCallback += OnClientConnected;
+        StartTime();
     }
 
-    // 연결 종료
-    public void StopConnection()
-    {
-        networkManager.OnClientDisconnectCallback += OnClientDisconnected;
-    }
-
-    // 인게임 시간
+    // 시간 변경
     private void StartTime()
     {
         InvokeRepeating(nameof(UpdateTime), 0f, DURATION);
         InvokeRepeating(nameof(StartLightCoroutine), 0f, DURATION);
     }
 
-    private void StartLight()
-    {
-
-    }
-
-    // 호스트 연결시 초기화
-    private void StartServer()
-    {
-        StartTime();
-        StartLight();
-    }
-
+    // 시간 설정
     private void UpdateTime()
     {
         timeMinute += 10;
@@ -124,25 +139,19 @@ public class ServerManager : NetworkBehaviour
             }
         }
 
-        UpdateTimeServerRpc(timeHour, timeMinute);
-    }
-
-    #region RPC
-    [ServerRpc]
-    private void UpdateTimeServerRpc(int setHour, int setMinute)
-    {
-        timeHour = setHour;
-        timeMinute = setMinute;
-
         UpdateTimeClientRpc(timeHour, timeMinute);
     }
+    #endregion
 
+    #region RPC
+    // 변화된 시간을 클라이언트에게 전송
     [ClientRpc]
     private void UpdateTimeClientRpc(int setHour, int setMinute)
     {
         if (setTimeEvent != null) { setTimeEvent.Invoke(setHour, setMinute); }
     }
 
+    // 변화된 연결된 인원을 클라이언트에게 전송
     [ClientRpc]
     private void UpdateConnectionCountClientRpc(int connectionCount)
     {
@@ -150,6 +159,7 @@ public class ServerManager : NetworkBehaviour
         Debug.Log($"현재 연결된 클라이언트 수: {currentConnection}");
     }
 
+    // 변화된 낮과 밤을 클라이언트에게 전송
     [ClientRpc]
     private void UpdateLightClientRpc(float angle)
     {
@@ -157,6 +167,7 @@ public class ServerManager : NetworkBehaviour
     }
     #endregion
 
+    #region Coroutine
     private void StartLightCoroutine()
     {
         if (lightCoroutine != null) { StopCoroutine(lightCoroutine); }
@@ -185,4 +196,5 @@ public class ServerManager : NetworkBehaviour
 
         lightCoroutine = null;
     }
+    #endregion
 }
