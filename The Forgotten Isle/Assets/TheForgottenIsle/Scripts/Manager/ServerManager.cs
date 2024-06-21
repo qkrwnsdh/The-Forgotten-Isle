@@ -2,7 +2,7 @@ using System;
 using Unity.Netcode;
 using UnityEngine;
 
-public class ServerManager : MonoBehaviour
+public class ServerManager : NetworkBehaviour
 {
     #region Singleton
     public static ServerManager instance;

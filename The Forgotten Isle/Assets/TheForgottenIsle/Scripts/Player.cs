@@ -8,6 +8,22 @@ public class Player : NetworkBehaviour
     private Vector3 lastServerPos;
     private readonly float SPEED = 5.0f;
 
+    #region Initialization and Setup
+    private void Start()
+    {
+        InitializationSetup();
+    }
+
+    private void InitializationSetup()
+    {
+        if (IsOwner)
+        {
+            foreach (Transform childTransform in transform)
+            { childTransform.gameObject.SetActive(true); }
+        }
+    }
+    #endregion
+
     private void Update()
     {
         if (IsOwner)
