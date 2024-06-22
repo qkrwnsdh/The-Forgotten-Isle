@@ -511,7 +511,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8673953824589928609
 Transform:
   m_ObjectHideFlags: 0
@@ -1060,7 +1060,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1641905730109096583
 Transform:
   m_ObjectHideFlags: 0
@@ -1192,7 +1192,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 165164075639010373}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1294,7 +1294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &165164075639010373
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1313,8 +1313,8 @@ RectTransform:
   - {fileID: 7824767406516535603}
   - {fileID: 5699871667695185937}
   - {fileID: 2985463246370940595}
-  - {fileID: 7416553529602189714}
   - {fileID: 2517925043114168102}
+  - {fileID: 7416553529602189714}
   - {fileID: 5432195424020609148}
   m_Father: {fileID: 7802944663049315489}
   m_RootOrder: 2
@@ -1398,6 +1398,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUGUI: {fileID: 2889107830022805722}
+  map: {fileID: 5653699689998203273}
+  inventory: {fileID: 8474961752750118001}
+  setting: {fileID: 8986071006143082202}
 --- !u!1 &6411358102652089343
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,6 +1839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293b257b6e34d234897e4c3e4f886e3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clientUI: {fileID: 2111188972971870096}
   pos:
     m_InternalValue: {x: 0, y: 0, z: 0}
 --- !u!1 &8039163282658459873
@@ -2067,7 +2071,7 @@ RectTransform:
   - {fileID: 3337339794301485247}
   - {fileID: 3793016550457450205}
   m_Father: {fileID: 165164075639010373}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
