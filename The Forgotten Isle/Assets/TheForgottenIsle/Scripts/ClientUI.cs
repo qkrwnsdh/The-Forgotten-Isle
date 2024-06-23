@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClientUI : MonoBehaviour
 {
@@ -9,6 +8,8 @@ public class ClientUI : MonoBehaviour
     [SerializeField] private GameObject map;
     [SerializeField] private GameObject inventory;
     [SerializeField] private GameObject setting;
+    [SerializeField] private Slider hpSlider;
+    [SerializeField] private Slider foodSlider;
 
     private void OnEnable()
     {
@@ -27,7 +28,8 @@ public class ClientUI : MonoBehaviour
     #region Button
     public void ButtonInventory()
     {
-
+        Debug.Log("¿©±â µé¾î¿È?");
+        Inventory();
     }
 
     public void ButtonSetting()
@@ -55,6 +57,16 @@ public class ClientUI : MonoBehaviour
         else if (inventory.activeSelf) { inventory.SetActive(false); }
         else if (setting.activeSelf) { setting.SetActive(false); }
         else { setting.SetActive(true); }
+    }
+
+    public void HpSlider(float value)
+    {
+        hpSlider.value = value;
+    }
+
+    public void FoodSlider(float value)
+    {
+        foodSlider.value = value;
     }
     #endregion
 }

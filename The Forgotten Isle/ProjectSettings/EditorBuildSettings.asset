@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/TheForgottenIsle/Scenes/JunohTest.unity
     guid: 02bf436b65284174a8ae92bb3169fbde
+  - enabled: 1
+    path: Assets/TheForgottenIsle/Scenes/SendTestScene.unity
+    guid: 9c5656ad4290b3e4d87f8936df60e3a4
   m_configObjects: {}

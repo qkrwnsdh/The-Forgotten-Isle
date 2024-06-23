@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Net.Sockets;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -142,6 +141,16 @@ public class Player : NetworkBehaviour
     private void EscapeKey()
     {
         clientUI.Setting();
+    }
+
+    private void UpdateUIHp(float value)
+    {
+        clientUI.HpSlider(value);
+    }
+
+    private void UpdateUIFood(float value)
+    {
+        clientUI.FoodSlider(value);
     }
 
     #region RPC

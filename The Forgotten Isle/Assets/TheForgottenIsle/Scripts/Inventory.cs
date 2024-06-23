@@ -4,11 +4,30 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    private GameObject[,] slots; 
+    private enum type
+    {
+        WEAPON,
+        INGREDIENT,
+        EXPENDABLES
+    }
 
+    [SerializeField] private GameObject[] slots;
+    [SerializeField] private GameObject description;
+
+    #region Inventory Interaction
     private void Start()
     {
+
     }
+
+    #endregion
+
+    #region Item Interaction
+    private void UseItem()
+    {
+
+    }
+    #endregion
 
     // 아이템 슬롯
     // 아이템 넣기
