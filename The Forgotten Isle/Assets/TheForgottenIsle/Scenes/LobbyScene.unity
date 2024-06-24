@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 384411297}
   - component: {fileID: 384411300}
   m_Layer: 0
-  m_Name: Button (2)
+  m_Name: OptionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -690,8 +690,9 @@ GameObject:
   - component: {fileID: 658742525}
   - component: {fileID: 658742524}
   - component: {fileID: 658742527}
+  - component: {fileID: 658742528}
   m_Layer: 0
-  m_Name: Button
+  m_Name: SingleButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -761,7 +762,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 658742525}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 658742528}
+        m_TargetAssemblyTypeName: SceneSwitch, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PlayScene
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &658742525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -814,6 +827,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverImage: {fileID: 1484020564}
   offsetX: -680
+--- !u!114 &658742528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658742522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dd5787f4c997e84a8c9a77efce65bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &681820238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,7 +1425,7 @@ GameObject:
   - component: {fileID: 1526923300}
   - component: {fileID: 1526923303}
   m_Layer: 0
-  m_Name: Button (3)
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1600,8 +1625,9 @@ GameObject:
   - component: {fileID: 1810028395}
   - component: {fileID: 1810028394}
   - component: {fileID: 1810028397}
+  - component: {fileID: 1810028398}
   m_Layer: 0
-  m_Name: Button (1)
+  m_Name: MultyButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1671,7 +1697,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1810028395}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1810028398}
+        m_TargetAssemblyTypeName: SceneSwitch, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1810028395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1724,6 +1762,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverImage: {fileID: 1484020564}
   offsetX: -670
+--- !u!114 &1810028398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810028392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dd5787f4c997e84a8c9a77efce65bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1959521933
 GameObject:
   m_ObjectHideFlags: 0
