@@ -4,6 +4,7 @@ import com.isle.isleGame.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,11 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
+    public MemberService(MemberRepository memberRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.memberRepository = memberRepository;
-        this.passwordEncoder = passwordEncoder;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     /*
@@ -28,20 +29,20 @@ public class MemberService {
     */
     public ResponseEntity<Object> join(JoinDTO dto) {
 
-        Optional<Member> member = memberRepository.findById(dto.getId());
+        Member member = memberRepository.findByUsername(dto.getUsername());
 
-        if(member.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        if(member != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ErrorResponse("이미 존재하는 아이디입니다."));
         }
         
         Member joinMember = new Member();
-        joinMember.setId(dto.id);
-        joinMember.setPassword(passwordEncoder.encode(dto.password));
+        joinMember.setUsername(dto.username);
+        joinMember.setPassword(bCryptPasswordEncoder.encode(dto.password));
 
         joinMember = memberRepository.save(joinMember);
 
-        log.info("join complete = {}", joinMember.getId());
+        log.info("join complete = {}", joinMember.getUsername());
 
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
