@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -32,7 +34,7 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region Private Members
-    
+
     #endregion
 
     #endregion
@@ -53,7 +55,16 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
+    private string inputId;
+    private string inputPassword;
+
     #region Button
+    public void ButtonInputId(TMP_InputField inputField) => inputId = inputField.text;
+    public void ButtonnInPutPassword(TMP_InputField inputField) => inputPassword = inputField.text;
+    public void ButtonSign() => HTTPManager.instance.PostAccount(Define.URL_JOIN, inputId, inputPassword);
+    public void ButtonDelete() => HTTPManager.instance.DeleteData(Define.URL_JOIN, inputId);
+    public void ButtonGet() => HTTPManager.instance.GetData(Define.URL_JOIN, inputId);
+    //public void ButtonUpdate() => HTTPManager.instance.UpdateSign(Define.URL_JOIN, inputId);
     /* ÀÛ¼ºÁß
     public void ButtonSinglePlay() => default;
     public void ButtonMultiPlay() => default;

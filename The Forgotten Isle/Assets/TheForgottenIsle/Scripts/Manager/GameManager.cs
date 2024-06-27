@@ -22,14 +22,16 @@ public class GameManager : MonoBehaviour
     public static event Action keySetting;
 
     public Dictionary<string, KeyCode> keyBindings = new Dictionary<string, KeyCode>();
+    public Dictionary<string, Dictionary<string, string>> itemCachings = new Dictionary<string, Dictionary<string, string>>();
 
     private void Start()
     {
         ServerManager.instance.StartConnection();
-        InitializationBindings();
+        KeyBinding();
     }
 
-    private void InitializationBindings()
+    #region Binding
+    private void KeyBinding()
     {
         keyBindings["Up"] = KeyCode.W;
         keyBindings["Down"] = KeyCode.S;
@@ -49,6 +51,14 @@ public class GameManager : MonoBehaviour
         keyBindings["Slot_06"] = KeyCode.Alpha6;
         keyBindings["Escape"] = KeyCode.Escape;
     }
+    #endregion
+
+    #region Caching
+    private void ItemCaching()
+    {
+        itemCachings = CSVReader.ReadCSVKeyDictionary("CSV");
+    }
+    #endregion
 
     // "M" 키로 작동하는 맵
     public void ToggleMap()

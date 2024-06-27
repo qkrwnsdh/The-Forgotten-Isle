@@ -215,6 +215,17 @@ public static partial class GFunc
         return shuffledArray;
     }
 
+    /// <summary>두 변수의 값을 교환하는 메서드</summary>
+    /// <typeparam name="T">변수의 타입</typeparam>
+    /// <param name="valueOld">교환할 변수</param>
+    /// <param name="valueNew">교환 당할 변수</param>
+    public static void Swap<T>(T valueOld, T valueNew)
+    {
+        T temp = valueOld;
+        valueOld = valueNew;
+        valueNew = temp;
+    }
+
     /// <summary>주어진 문자열을 StringBuilder에 추가하고 그 결과를 TextMeshProUGUI에 할당하는 메서드</summary>
     /// <param name="value_">추가할 문자열</param>
     /// <param name="textType_">텍스트를 표시할 컴포넌트</param>
