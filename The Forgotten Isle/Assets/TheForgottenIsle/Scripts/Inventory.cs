@@ -14,33 +14,55 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
     }
 
     [SerializeField] private GameObject[] slots;
+    [SerializeField] private GameObject[] quickSlots;
     [SerializeField] private GameObject description;
     [SerializeField] private GameObject dragItem;
 
     private bool isDragging = false;
-    private Image dragItemImage;
-    private TextMeshProUGUI dragItemText;
     private GraphicRaycaster graphicRay;
     private int layerItem;
 
+    private GameObject currentSlot;
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        { UseItem(0); }
+        if (Input.GetKeyUp(KeyCode.Alpha2))
+        { UseItem(1); }
+        if (Input.GetKeyUp(KeyCode.Alpha3))
+        { UseItem(2); }
+        if (Input.GetKeyUp(KeyCode.Alpha4))
+        { UseItem(3); }
+        if (Input.GetKeyUp(KeyCode.Alpha5))
+        { UseItem(4); }
+        if (Input.GetKeyUp(KeyCode.Alpha6))
+        { UseItem(5); }
+    }
+
+    private void UseItem(int number)
+    {
+    }
+
+    #region Initialization and Setup
     private void Start()
     {
         InitializationComponents();
-        InitializationSetup();
+        InitializationSetups();
     }
 
     private void InitializationComponents()
     {
         graphicRay = GetComponentInParent<Canvas>().GetComponent<GraphicRaycaster>();
-        dragItemImage = dragItem.transform.GetChild(0).GetComponent<Image>();
-        dragItemText = dragItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
-    private void InitializationSetup()
+    private void InitializationSetups()
     {
-        layerItem = LayerMask.NameToLayer("ItemLayer");
+        layerItem = LayerMask.NameToLayer("Item");
     }
+    #endregion
 
+    #region Handler
     public void OnPointerDown(PointerEventData eventData)
     {
         List<RaycastResult> results = new List<RaycastResult>();
@@ -49,15 +71,11 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 
         foreach (RaycastResult result in results)
         {
-            if (result.gameObject.layer == 10)
+            if (result.gameObject.layer == layerItem)
             {
-                Debug.Log(result.gameObject.name);
+                currentSlot = result.gameObject;
 
-                Image targetImage = result.gameObject.transform.GetChild(0).GetComponent<Image>();
-                TextMeshProUGUI targetUGUI = result.gameObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-
-                dragItemImage.color = targetImage.color;
-                dragItemText.text = targetUGUI.text;
+                ItemSwap(result.gameObject.transform, dragItem.transform);
 
                 SetDraggedPosition(eventData);
                 dragItem.SetActive(true);
@@ -78,9 +96,46 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
     {
         if (isDragging)
         {
+            List<RaycastResult> results = new List<RaycastResult>();
+
+            graphicRay.Raycast(eventData, results);
+
+            foreach (RaycastResult result in results)
+            {
+                if (result.gameObject.layer == layerItem)
+                {
+                    ItemSwap(result.gameObject.transform, dragItem.transform);
+                }
+            }
+
+            ItemSwap(currentSlot.gameObject.transform, dragItem.transform);
+
             isDragging = false;
             dragItem.SetActive(false);
         }
+    }
+
+    private void ItemSwap(Transform parent1, Transform parent2)
+    {
+        Transform child1_1 = parent1.GetChild(0);
+        Transform child1_2 = parent1.GetChild(1);
+        Transform child2_1 = parent2.GetChild(0);
+        Transform child2_2 = parent2.GetChild(1);
+
+        child1_1.SetParent(parent2);
+        child2_1.SetParent(parent1);
+        child1_2.SetParent(parent2);
+        child2_2.SetParent(parent1);
+
+        Vector3 tempPosition = child1_1.position;
+
+        child1_1.position = child2_1.position;
+        child2_1.position = tempPosition;
+
+        tempPosition = child1_2.position;
+
+        child1_2.position = child2_2.position;
+        child2_2.position = tempPosition;
     }
 
     private void SetDraggedPosition(PointerEventData eventData)
@@ -93,4 +148,7 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 
         dragItem.GetComponent<RectTransform>().localPosition = localPoint;
     }
+    #endregion
+
+
 }
