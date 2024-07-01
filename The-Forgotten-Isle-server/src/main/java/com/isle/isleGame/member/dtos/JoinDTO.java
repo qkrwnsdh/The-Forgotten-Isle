@@ -1,4 +1,4 @@
-package com.isle.isleGame.member;
+package com.isle.isleGame.member.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

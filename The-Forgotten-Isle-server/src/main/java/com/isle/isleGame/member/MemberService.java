@@ -1,14 +1,13 @@
 package com.isle.isleGame.member;
 
+import com.isle.isleGame.member.dtos.JoinDTO;
+import com.isle.isleGame.member.dtos.PasswordFindDTO;
 import com.isle.isleGame.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -47,5 +46,10 @@ public class MemberService {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
+    }
+
+    public ResponseEntity<Object> findPassword(PasswordFindDTO dto) {
+
+        return null;
     }
 }
