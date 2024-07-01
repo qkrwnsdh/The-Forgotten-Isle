@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/account")
 public class MemberController {
 
     private final MemberService memberService;
@@ -20,7 +20,7 @@ public class MemberController {
     /*
      * 회원 가입
      */
-    @PostMapping("/join")
+    @PostMapping("/v2/join")
     public ResponseEntity<Object> join (@Valid @RequestBody JoinDTO dto) {
         return memberService.join(dto);
     }

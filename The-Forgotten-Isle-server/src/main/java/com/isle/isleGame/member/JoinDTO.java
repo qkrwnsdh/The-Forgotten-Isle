@@ -15,4 +15,6 @@ public class JoinDTO {
 
     @NotNull
     String password;
+
+    String ip;
 }
