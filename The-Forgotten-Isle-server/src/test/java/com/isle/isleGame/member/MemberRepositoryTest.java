@@ -14,7 +14,10 @@ class MemberRepositoryTest {
 
     @Test
     void join_test() {
-        Member member = new Member("qwe","1234");
+        Member member = new Member();
+        member.setUsername("qwe");
+        member.setPassword("1234");
+        member.setIp("103.234.12.23");
 
         Member saveMember = memberRepository.save(member);
 

@@ -17,8 +17,9 @@ class MemberServiceTest {
     @Test
     void 회원가입_성공() {
         JoinDTO dto = new JoinDTO();
-        dto.setId("qwe");
+        dto.setUsername("qwe");
         dto.setPassword("1234");
+        dto.setIp("192.168.23.14");
 
         ResponseEntity<Object> entity = memberService.join(dto);
 
@@ -28,13 +29,14 @@ class MemberServiceTest {
     @Test
     void 회원가입_실패() {
         JoinDTO dto = new JoinDTO();
-        dto.setId("qwe");
+        dto.setUsername("qwe");
         dto.setPassword("1234");
+        dto.setIp("192.168.23.14");
 
         memberService.join(dto);
 
         ResponseEntity<Object> entity = memberService.join(dto);
 
-        assertEquals(entity.getStatusCode(), HttpStatus.NOT_FOUND);
+        assertEquals(entity.getStatusCode(), HttpStatus.BAD_REQUEST);
     }
 }
