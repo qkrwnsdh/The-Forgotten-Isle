@@ -1,6 +1,5 @@
-package com.isle.isleGame.member;
+package com.isle.isleGame.member.dtos;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JoinDTO {
-
-    @NotNull
-    String id;
-
-    @NotNull
+public class LoginDTO {
+    String username;
     String password;
 }
