@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -75,8 +76,21 @@ public class MemberService {
                 .build();
     }
 
-    public ResponseEntity<Object> setPassword(SetPasswordDTO dto) {
-
-        return null;
+    @Transactional
+    public ResponseEntity<Object> setPassword(SetPasswordDTO dto, String username) {
+        Member member = memberRepository.findByUsername(username);
+        if(member == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse("존재하지 않는 회원입니다."));
+        }
+        if(bCryptPasswordEncoder.matches(dto.getPassword(), member.getPassword())){
+            member.setPassword(bCryptPasswordEncoder.encode(dto.getNew_password()));
+            log.info("비밀번호 변경 완료");
+            return ResponseEntity.status(HttpStatus.OK)
+                    .build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse("비밀번호가 틀렸습니다."));
+        }
     }
 }

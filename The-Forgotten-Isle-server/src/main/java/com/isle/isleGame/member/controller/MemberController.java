@@ -6,6 +6,7 @@ import com.isle.isleGame.member.dtos.SetPasswordDTO;
 import com.isle.isleGame.member.service.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,7 @@ public class MemberController {
     */
     @PostMapping("/v1/set_password")
     public ResponseEntity<Object> setPassword (@Valid @RequestBody SetPasswordDTO dto) {
-        return memberService.setPassword(dto);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return memberService.setPassword(dto,username);
     }
 }

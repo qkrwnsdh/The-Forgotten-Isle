@@ -4,6 +4,7 @@ import com.isle.isleGame.member.entity.Member;
 import com.isle.isleGame.member.repository.MemberRepository;
 import com.isle.isleGame.member.dtos.MailDTO;
 import com.isle.isleGame.member.dtos.PwRequestDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 public class SendService {
 
     private JavaMailSender mailSender;
@@ -59,7 +61,7 @@ public class SendService {
     }
 
     public void mailSend(MailDTO mailDto) {
-        System.out.println("이메일 전송 완료");
+
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mailDto.getAddress());
         message.setFrom(FROM_ADDRESS);
@@ -67,5 +69,7 @@ public class SendService {
         message.setText(mailDto.getMessage());
 
         mailSender.send(message);
+
+        log.info("임시 비밀번호 이메일 전송 완료");
     }
 }
