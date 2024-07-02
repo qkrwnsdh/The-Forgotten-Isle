@@ -1,5 +1,7 @@
-package com.isle.isleGame.member;
+package com.isle.isleGame.member.service;
 
+import com.isle.isleGame.member.entity.Member;
+import com.isle.isleGame.member.repository.MemberRepository;
 import com.isle.isleGame.member.dtos.MailDTO;
 import com.isle.isleGame.member.dtos.PwRequestDTO;
 import org.springframework.mail.SimpleMailMessage;

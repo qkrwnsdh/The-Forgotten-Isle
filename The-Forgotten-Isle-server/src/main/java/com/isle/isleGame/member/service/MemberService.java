@@ -1,10 +1,11 @@
-package com.isle.isleGame.member;
+package com.isle.isleGame.member.service;
 
+import com.isle.isleGame.member.entity.Member;
+import com.isle.isleGame.member.repository.MemberRepository;
 import com.isle.isleGame.member.dtos.JoinDTO;
 import com.isle.isleGame.member.dtos.MailDTO;
 import com.isle.isleGame.member.dtos.PwRequestDTO;
 import com.isle.isleGame.response.ErrorResponse;
-import jakarta.validation.constraints.Email;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

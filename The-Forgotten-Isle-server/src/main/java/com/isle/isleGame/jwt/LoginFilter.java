@@ -1,7 +1,7 @@
 package com.isle.isleGame.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.isle.isleGame.member.CustomMemberDetails;
+import com.isle.isleGame.member.service.CustomMemberDetails;
 import com.isle.isleGame.member.dtos.LoginDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;

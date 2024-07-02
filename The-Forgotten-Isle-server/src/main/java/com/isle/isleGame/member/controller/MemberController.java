@@ -1,7 +1,8 @@
-package com.isle.isleGame.member;
+package com.isle.isleGame.member.controller;
 
 import com.isle.isleGame.member.dtos.JoinDTO;
 import com.isle.isleGame.member.dtos.PwRequestDTO;
+import com.isle.isleGame.member.service.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,4 +1,4 @@
-package com.isle.isleGame.member;
+package com.isle.isleGame.member.entity;
 
 
 import jakarta.persistence.*;

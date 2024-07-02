@@ -1,5 +1,7 @@
 package com.isle.isleGame.member;
 
+import com.isle.isleGame.member.entity.Member;
+import com.isle.isleGame.member.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

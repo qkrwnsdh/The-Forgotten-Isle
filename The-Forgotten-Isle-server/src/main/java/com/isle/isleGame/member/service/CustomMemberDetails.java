@@ -1,5 +1,6 @@
-package com.isle.isleGame.member;
+package com.isle.isleGame.member.service;
 
+import com.isle.isleGame.member.entity.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

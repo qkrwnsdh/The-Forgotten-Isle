@@ -1,11 +1,11 @@
-package com.isle.isleGame.member;
+package com.isle.isleGame.member.service;
 
+import com.isle.isleGame.member.entity.Member;
+import com.isle.isleGame.member.repository.MemberRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CustomMemberDetailsService implements UserDetailsService {

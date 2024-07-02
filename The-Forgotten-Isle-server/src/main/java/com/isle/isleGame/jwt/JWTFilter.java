@@ -1,7 +1,7 @@
 package com.isle.isleGame.jwt;
 
-import com.isle.isleGame.member.CustomMemberDetails;
-import com.isle.isleGame.member.Member;
+import com.isle.isleGame.member.service.CustomMemberDetails;
+import com.isle.isleGame.member.entity.Member;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
