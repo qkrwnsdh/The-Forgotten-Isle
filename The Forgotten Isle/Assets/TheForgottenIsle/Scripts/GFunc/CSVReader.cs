@@ -3,6 +3,7 @@ using UnityEngine;
 
 public static class CSVReader
 {
+    private const string PATH = "Table/";     // 리소스 하위 경로
     private const char DELIMITER = ',';      // CSV 파일에서 사용하는 구분자
     private const char LINE = '\n';          // CSV 파일에서 사용하는 라인 구분자
 
@@ -17,7 +18,7 @@ public static class CSVReader
     {
         Dictionary<string, string> dataDictionary = new Dictionary<string, string>();
 
-        TextAsset csvTextAsset = Resources.Load<TextAsset>(_csvFileName);
+        TextAsset csvTextAsset = Resources.Load<TextAsset>(PATH + _csvFileName);
 
         if (csvTextAsset != null)
         {
@@ -64,7 +65,7 @@ public static class CSVReader
     {
         Dictionary<string, Dictionary<string, string>> dataDictionary = new Dictionary<string, Dictionary<string, string>>();
 
-        TextAsset csvTextAsset = Resources.Load<TextAsset>(_csvFileName);
+        TextAsset csvTextAsset = Resources.Load<TextAsset>(PATH + _csvFileName);
 
         if (csvTextAsset != null)
         {
@@ -120,7 +121,7 @@ public static class CSVReader
     {
         Dictionary<string, List<string>> dataDictionary = new Dictionary<string, List<string>>();
 
-        TextAsset csvTextAsset = Resources.Load<TextAsset>(_csvFileName);
+        TextAsset csvTextAsset = Resources.Load<TextAsset>(PATH + _csvFileName);
 
         if (csvTextAsset != null)
         {

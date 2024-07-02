@@ -22,12 +22,14 @@ public class GameManager : MonoBehaviour
     public static event Action keySetting;
 
     public Dictionary<string, KeyCode> keyBindings = new Dictionary<string, KeyCode>();
-    public Dictionary<string, Dictionary<string, string>> itemCachings = new Dictionary<string, Dictionary<string, string>>();
+    public Dictionary<string, Dictionary<string, string>> itemData = new Dictionary<string, Dictionary<string, string>>();
 
     private void Start()
     {
         ServerManager.instance.StartConnection();
         KeyBinding();
+        ItemCaching();
+        
     }
 
     #region Binding
@@ -56,7 +58,7 @@ public class GameManager : MonoBehaviour
     #region Caching
     private void ItemCaching()
     {
-        itemCachings = CSVReader.ReadCSVKeyDictionary("CSV");
+        itemData = CSVReader.ReadCSVKeyDictionary("Item_Table");
     }
     #endregion
 

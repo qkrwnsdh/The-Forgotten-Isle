@@ -1,19 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Item
+public class Item : MonoBehaviour
 {
-    public Sprite image { get; private set; }
-    public string name { get; private set; }
-    public string count { get; private set; }
-    public string description { get; private set; }
+    private Image image;
+    private TextMeshProUGUI text;
 
-    public Item(string name, string description, string count)
+    public bool isEmpty;
+    public int count;
+
+    public void AddItem()
     {
-        this.name = name;
-        this.description = description;
-        this.count = count;
+        isEmpty = true;
     }
 
+    public void RemoveItem()
+    {
+        isEmpty = false;
+    }
+
+    // TODO: 아이템 갯수 수정시 최대 최소값 조정
+    public void AddItemCount(int value) => count += value;
+    public void RemoveItemCount(int value) => count -= value;
+
+    public void UseItem()
+    {
+        if (isEmpty) { return; }
+    }
 }

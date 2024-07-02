@@ -1,48 +1,27 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    private enum type
-    {
-        WEAPON,
-        INGREDIENT,
-        EXPENDABLES
-    }
+    #region Members
 
+    #region Attribute Members
     [SerializeField] private GameObject[] slots;
     [SerializeField] private GameObject[] quickSlots;
     [SerializeField] private GameObject description;
     [SerializeField] private GameObject dragItem;
+    #endregion
 
+    #region Private Members
     private bool isDragging = false;
     private GraphicRaycaster graphicRay;
     private int layerItem;
-
     private GameObject currentSlot;
+    #endregion
 
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Alpha1))
-        { UseItem(0); }
-        if (Input.GetKeyUp(KeyCode.Alpha2))
-        { UseItem(1); }
-        if (Input.GetKeyUp(KeyCode.Alpha3))
-        { UseItem(2); }
-        if (Input.GetKeyUp(KeyCode.Alpha4))
-        { UseItem(3); }
-        if (Input.GetKeyUp(KeyCode.Alpha5))
-        { UseItem(4); }
-        if (Input.GetKeyUp(KeyCode.Alpha6))
-        { UseItem(5); }
-    }
-
-    private void UseItem(int number)
-    {
-    }
+    #endregion
 
     #region Initialization and Setup
     private void Start()
@@ -65,9 +44,7 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
     #region Handler
     public void OnPointerDown(PointerEventData eventData)
     {
-        List<RaycastResult> results = new List<RaycastResult>();
-
-        graphicRay.Raycast(eventData, results);
+        List<RaycastResult> results = PerformRaycast(eventData);
 
         foreach (RaycastResult result in results)
         {
@@ -78,8 +55,9 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
                 ItemSwap(result.gameObject.transform, dragItem.transform);
 
                 SetDraggedPosition(eventData);
-                dragItem.SetActive(true);
-                isDragging = true;
+                SetActiveDrag(true);
+
+                break;
             }
         }
     }
@@ -96,46 +74,47 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
     {
         if (isDragging)
         {
-            List<RaycastResult> results = new List<RaycastResult>();
-
-            graphicRay.Raycast(eventData, results);
+            List<RaycastResult> results = PerformRaycast(eventData);
 
             foreach (RaycastResult result in results)
             {
                 if (result.gameObject.layer == layerItem)
                 {
                     ItemSwap(result.gameObject.transform, dragItem.transform);
+
+                    break;
                 }
             }
 
             ItemSwap(currentSlot.gameObject.transform, dragItem.transform);
-
-            isDragging = false;
-            dragItem.SetActive(false);
+            SetActiveDrag(false);
         }
+    }
+
+    private List<RaycastResult> PerformRaycast(PointerEventData eventData)
+    {
+        List<RaycastResult> results = new List<RaycastResult>();
+        graphicRay.Raycast(eventData, results);
+        return results;
+    }
+
+    private void SetActiveDrag(bool value)
+    {
+        isDragging = value;
+        dragItem.SetActive(value);
     }
 
     private void ItemSwap(Transform parent1, Transform parent2)
     {
-        Transform child1_1 = parent1.GetChild(0);
-        Transform child1_2 = parent1.GetChild(1);
-        Transform child2_1 = parent2.GetChild(0);
-        Transform child2_2 = parent2.GetChild(1);
+        Transform child1 = parent1.GetChild(0);
+        Transform child2 = parent2.GetChild(0);
 
-        child1_1.SetParent(parent2);
-        child2_1.SetParent(parent1);
-        child1_2.SetParent(parent2);
-        child2_2.SetParent(parent1);
+        child1.SetParent(parent2);
+        child2.SetParent(parent1);
 
-        Vector3 tempPosition = child1_1.position;
-
-        child1_1.position = child2_1.position;
-        child2_1.position = tempPosition;
-
-        tempPosition = child1_2.position;
-
-        child1_2.position = child2_2.position;
-        child2_2.position = tempPosition;
+        Vector3 tempPosition = child1.position;
+        child1.position = child2.position;
+        child2.position = tempPosition;
     }
 
     private void SetDraggedPosition(PointerEventData eventData)
@@ -149,6 +128,5 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
         dragItem.GetComponent<RectTransform>().localPosition = localPoint;
     }
     #endregion
-
 
 }
