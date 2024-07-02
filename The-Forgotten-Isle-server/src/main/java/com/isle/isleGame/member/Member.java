@@ -2,6 +2,7 @@ package com.isle.isleGame.member;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +25,7 @@ public class Member {
     private String role;
 
     private String ip;
+
+    @Email
+    private String email;
 }

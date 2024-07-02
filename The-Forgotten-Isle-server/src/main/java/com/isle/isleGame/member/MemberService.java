@@ -1,8 +1,10 @@
 package com.isle.isleGame.member;
 
 import com.isle.isleGame.member.dtos.JoinDTO;
-import com.isle.isleGame.member.dtos.PasswordFindDTO;
+import com.isle.isleGame.member.dtos.MailDTO;
+import com.isle.isleGame.member.dtos.PwRequestDTO;
 import com.isle.isleGame.response.ErrorResponse;
+import jakarta.validation.constraints.Email;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +17,12 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final SendService sendService;
 
-    public MemberService(MemberRepository memberRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public MemberService(MemberRepository memberRepository, BCryptPasswordEncoder bCryptPasswordEncoder, SendService sendService) {
         this.memberRepository = memberRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.sendService = sendService;
     }
 
     /*
@@ -39,6 +43,7 @@ public class MemberService {
         joinMember.setUsername(dto.getUsername());
         joinMember.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         joinMember.setIp(dto.getIp());
+        joinMember.setEmail(dto.getEmail());
 
         joinMember = memberRepository.save(joinMember);
 
@@ -48,8 +53,23 @@ public class MemberService {
                 .build();
     }
 
-    public ResponseEntity<Object> findPassword(PasswordFindDTO dto) {
+    /*
+    * 비밀번호 찾기
+    */
+    public ResponseEntity<Object> findPW(PwRequestDTO dto) {
+        Member member = memberRepository.findByUsername(dto.getUsername());
+        if(member == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse("존재하지 않는 아이디입니다."));
+        } else{
+            return sendEmail(dto,member.getEmail());
+        }
+    }
 
-        return null;
+    public ResponseEntity<Object>  sendEmail(PwRequestDTO dto, String email) {
+        MailDTO mailDTO = sendService.createMailAndChargePassword(dto, email);
+        sendService.mailSend(mailDTO);
+        return ResponseEntity.status(HttpStatus.OK)
+                .build();
     }
 }

@@ -1,7 +1,7 @@
 package com.isle.isleGame.member;
 
 import com.isle.isleGame.member.dtos.JoinDTO;
-import com.isle.isleGame.member.dtos.PasswordFindDTO;
+import com.isle.isleGame.member.dtos.PwRequestDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +31,6 @@ public class MemberController {
     * 비밀번호 찾기
     */
     @PostMapping("/v1/password")
-    public ResponseEntity<Object> findPassword (@RequestBody PasswordFindDTO dto) {return memberService.findPassword(dto);}
+    public ResponseEntity<Object> findPassword (@RequestBody PwRequestDTO dto) {return memberService.findPW(dto);}
 
 }

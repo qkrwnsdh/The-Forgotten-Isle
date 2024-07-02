@@ -1,5 +1,6 @@
 package com.isle.isleGame.member.dtos;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,9 @@ public class JoinDTO {
 
     @NotNull
     String password;
+
+    @NotNull @Email
+    String email;
 
     String ip;
 }
