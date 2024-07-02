@@ -2,6 +2,7 @@ package com.isle.isleGame.member.controller;
 
 import com.isle.isleGame.member.dtos.JoinDTO;
 import com.isle.isleGame.member.dtos.PwRequestDTO;
+import com.isle.isleGame.member.dtos.SetPasswordDTO;
 import com.isle.isleGame.member.service.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -34,4 +35,11 @@ public class MemberController {
     @PostMapping("/v1/password")
     public ResponseEntity<Object> findPassword (@RequestBody PwRequestDTO dto) {return memberService.findPW(dto);}
 
+    /*
+    * 비밀번호 변경
+    */
+    @PostMapping("/v1/set_password")
+    public ResponseEntity<Object> setPassword (@Valid @RequestBody SetPasswordDTO dto) {
+        return memberService.setPassword(dto);
+    }
 }

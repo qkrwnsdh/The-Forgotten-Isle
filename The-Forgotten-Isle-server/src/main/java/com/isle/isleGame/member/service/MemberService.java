@@ -1,5 +1,6 @@
 package com.isle.isleGame.member.service;
 
+import com.isle.isleGame.member.dtos.SetPasswordDTO;
 import com.isle.isleGame.member.entity.Member;
 import com.isle.isleGame.member.repository.MemberRepository;
 import com.isle.isleGame.member.dtos.JoinDTO;
@@ -72,5 +73,10 @@ public class MemberService {
         sendService.mailSend(mailDTO);
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
+    }
+
+    public ResponseEntity<Object> setPassword(SetPasswordDTO dto) {
+
+        return null;
     }
 }
