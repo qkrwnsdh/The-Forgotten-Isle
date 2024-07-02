@@ -69,6 +69,9 @@ public class MemberService {
         }
     }
 
+    /*
+    * 임시 비밀번호 이메일 전송
+    */
     public ResponseEntity<Object>  sendEmail(PwRequestDTO dto, String email) {
         MailDTO mailDTO = sendService.createMailAndChargePassword(dto, email);
         sendService.mailSend(mailDTO);
@@ -76,6 +79,9 @@ public class MemberService {
                 .build();
     }
 
+    /*
+    * 비밀번호 변경
+    */
     @Transactional
     public ResponseEntity<Object> setPassword(SetPasswordDTO dto, String username) {
         Member member = memberRepository.findByUsername(username);
