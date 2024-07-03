@@ -47,6 +47,7 @@ public class MemberService {
         joinMember.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         joinMember.setIp(dto.getIp());
         joinMember.setEmail(dto.getEmail());
+        joinMember.setRole("user");
 
         joinMember = memberRepository.save(joinMember);
 
