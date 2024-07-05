@@ -2,10 +2,7 @@ package com.isle.isleGame.server;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/server")
@@ -22,5 +19,11 @@ public class ServerController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return serverService.addServer(username, serverAddDTO);
     }
+
+    @GetMapping
+    public ResponseEntity<Object> loadServer(@RequestParam int server_ID) {
+        return serverService.loadServer(server_ID);
+    }
+
 
 }
