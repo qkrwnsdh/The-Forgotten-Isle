@@ -1,5 +1,7 @@
-package com.isle.isleGame.server;
+package com.isle.isleGame.server.controller;
 
+import com.isle.isleGame.server.service.ServerService;
+import com.isle.isleGame.server.dto.ServerAddDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;

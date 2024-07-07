@@ -1,13 +1,15 @@
-package com.isle.isleGame.server;
+package com.isle.isleGame.server.service;
 
 import com.isle.isleGame.member.entity.Member;
 import com.isle.isleGame.member.repository.MemberRepository;
 import com.isle.isleGame.response.ErrorResponse;
+import com.isle.isleGame.server.dto.ServerAddDTO;
+import com.isle.isleGame.server.dto.ServerLoadResponseDTO;
+import com.isle.isleGame.server.entity.Server;
+import com.isle.isleGame.server.repository.ServerRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class ServerService {

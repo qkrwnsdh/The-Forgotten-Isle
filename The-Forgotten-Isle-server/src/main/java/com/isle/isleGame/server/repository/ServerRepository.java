@@ -1,8 +1,7 @@
-package com.isle.isleGame.server;
+package com.isle.isleGame.server.repository;
 
+import com.isle.isleGame.server.entity.Server;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 public interface ServerRepository extends JpaRepository <Server, Integer> {
 

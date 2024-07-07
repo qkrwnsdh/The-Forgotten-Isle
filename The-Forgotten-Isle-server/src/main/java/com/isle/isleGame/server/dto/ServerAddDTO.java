@@ -1,4 +1,4 @@
-package com.isle.isleGame.server;
+package com.isle.isleGame.server.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

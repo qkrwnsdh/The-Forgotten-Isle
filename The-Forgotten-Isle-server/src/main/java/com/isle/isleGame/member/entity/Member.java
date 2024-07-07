@@ -1,7 +1,7 @@
 package com.isle.isleGame.member.entity;
 
 
-import com.isle.isleGame.server.Server;
+import com.isle.isleGame.server.entity.Server;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
