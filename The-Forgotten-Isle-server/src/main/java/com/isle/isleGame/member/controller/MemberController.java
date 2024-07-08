@@ -34,7 +34,7 @@ public class MemberController {
     * 비밀번호 찾기
     */
     @PostMapping("/v1/password")
-    public ResponseEntity<Object> findPassword (@RequestBody PwRequestDTO dto) {return memberService.findPW(dto);}
+    public ResponseEntity<Object> findPassword (@Valid @RequestBody PwRequestDTO dto) {return memberService.findPW(dto);}
 
     /*
     * 비밀번호 변경

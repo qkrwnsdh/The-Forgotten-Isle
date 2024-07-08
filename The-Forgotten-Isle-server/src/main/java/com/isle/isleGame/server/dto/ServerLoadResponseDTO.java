@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ServerLoadResponseDTO {
 
+
     private String difficulty;
 
     private int date;

@@ -5,11 +5,14 @@ import com.isle.isleGame.member.repository.MemberRepository;
 import com.isle.isleGame.response.ErrorResponse;
 import com.isle.isleGame.server.dto.ServerAddDTO;
 import com.isle.isleGame.server.dto.ServerLoadResponseDTO;
+import com.isle.isleGame.server.dto.ServerSaveDTO;
 import com.isle.isleGame.server.entity.Server;
 import com.isle.isleGame.server.repository.ServerRepository;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ServerService {
@@ -65,4 +68,30 @@ public class ServerService {
     }
 
 
+    @Transactional
+    public ResponseEntity<Object> saveServer(@NotBlank int server_ID, ServerSaveDTO dto) {
+        Server server = serverRepository.findById(server_ID).orElse(null);
+        if(server == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse("해당 서버 데이터가 존재하지 않습니다."));
+        }
+
+        server.setDate(dto.getDate());
+        server.setTime(dto.getTime());
+        return ResponseEntity.status(HttpStatus.OK)
+                .build();
+    }
+
+    @Transactional
+    public ResponseEntity<Object> deleteServer(int serverId) {
+        Server server = serverRepository.findById(serverId).orElse(null);
+        if(server == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse("해당 서버 데이터가 존재하지 않습니다."));
+        }
+
+        serverRepository.delete(server);
+        return ResponseEntity.status(HttpStatus.OK)
+                .build();
+    }
 }
